@@ -32,4 +32,6 @@ public class Product {
 	@jakarta.validation.constraints.NotNull
 	private LocalDateTime endTime;
 	private String status;
+	private int winnerId;
+	private int winningAmount;
 }

@@ -1,5 +1,7 @@
 package com.cts.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,11 @@ public class BiddingControl {
 	@PostMapping("/bid")
 	public String makeBidding(@RequestBody Bidding bid) {
 		return service.makeBidding(bid);
+	}
+	
+	@GetMapping("/getAllBids")
+	public List<Bidding> getAllBids(){
+		return service.getAllBids();
 	}
 	
 	@GetMapping("/getResult/{id}")

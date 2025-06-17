@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cts.exception.InvalidIdException;
 import com.cts.model.Auction;
 import com.cts.model.Product;
 import com.cts.service.ProductService;
@@ -47,7 +49,7 @@ public class ProductControl {
 	}
 	
 	@GetMapping("/fetchById/{id}")
-	public Optional<Product> getAnyProductById(@PathVariable("id") int productId){
+	public Optional<Product> getAnyProductById(@PathVariable("id") int productId) throws InvalidIdException{
 		return service.getAnyProductById(productId);
 	}
 	
@@ -81,12 +83,18 @@ public class ProductControl {
 		return service.startAuction(productId);
 	}
 	
-	public void endAuction() {
-		
-	}
-	
 	@GetMapping("/fetchAuctionProductByAuctionId/{id}")
-	public Optional<Auction> getAuctionProductsByAuctionId(@PathVariable("id") int productId){
+	public Optional<Auction> getAuctionProductsByAuctionId(@PathVariable("id") int productId) throws InvalidIdException{
 		return service.getAuctionProductByAuctionId(productId);
+		}
+		
+	@GetMapping("/fetchBiddingAmountByAuctionId/{id}")
+	public int getStartingBidAmount(@PathVariable("id") int auctionId) {
+			return service.getStartingBidAmount(auctionId);
+		}
+	
+	@GetMapping("/fetchProductBySellerId/{id}")
+	public List<Product> getProductBySellerId(@PathVariable("id") int sellerId) throws InvalidIdException {
+		return service.getProductBySellerId(sellerId);
 	}
 }
